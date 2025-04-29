@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #form-container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 350px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .field {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .field label {
+      font-size: 14px;
+      color: #444;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4460AA;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #334b89;
+    }
+
+    .status-message {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #28a745;
+    }
+
+    .error-message {
+      color: #dc3545;
+    }
+
+    .greeting {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #4460AA;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="form-container">
+    <h2>Contact Me</h2>
+    <p class="greeting" id="greeting">Hello! Please fill out the form to send an email.</p>
+    <form id="form">
+      
+      <div class="field">
+        <label for="from_name"> Name</label>
+        <input type="text" name="from_name" id="from_name" required>
+      </div>
+      <div class="field">
+        <label for="from_email"> Email</label>
+        <input type="email" name="from_email" id="from_email" required>
+      </div>
+      <div class="field">
+        <label for="message">Message</label>
+        <input type="text" name="message" id="message" required>
+      </div>
+     
+      <input type="submit" id="button" value="Send Email">
+    </form>
+    <div class="status-message" id="status"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    emailjs.init('dSgzXPo5VPkQFVvVC');
+
+    const btn = document.getElementById('button');
+    const statusMessage = document.getElementById('status');
+    const greeting = document.getElementById('greeting');
+    const fromNameField = document.getElementById('from_name');
+
+    // Greet the user by name after entering it
+    fromNameField.addEventListener('blur', function() {
+      if (fromNameField.value) {
+        greeting.textContent = `Hello ${fromNameField.value}, please fill out the form to send an email.`;
+      }
+    });
+
+    document.getElementById('form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      btn.value = 'Sending...';
+      const serviceID = 'Portfolio_New';
+      const templateID = 'template_m9upmmc';
+
+      emailjs.sendForm(serviceID, templateID, this)
+        .then(() => {
+          btn.value = 'Send Email';
+          statusMessage.textContent = `Thank you ${fromNameField.value}, your email has been sent successfully!`;
+          statusMessage.classList.remove('error-message');
+        }, (err) => {
+          btn.value = 'Send Email';
+          statusMessage.textContent = 'Failed to send email. Please try again.';
+          statusMessage.classList.add('error-message');
+        });
+    });
+  </script>
+
+</body>
+</html>
