@@ -9703,3 +9703,34 @@ textarea.form-control {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
+
+    .section-heading {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 10px;
+}
+
+.section-heading h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: white;
+}
+
+.underline {
+  width: 90%;
+  max-width: 1000px;
+  height: 4px;
+  margin: 0 auto;
+  background: linear-gradient(to right, #cbd5e1, #84cc16, #d97706);
+  border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .section-heading h1 {
+    font-size: 1.8rem;
+  }
+
+  .underline {
+    width: 80%;
+  }
+}
